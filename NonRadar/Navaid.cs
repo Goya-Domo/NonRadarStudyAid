@@ -8,7 +8,43 @@ namespace NonRadar
 {
     class Navaid
     {
-        public string Name;
-        public string Type;
+        static private List<Navaid> allFixes = new List<Navaid>();
+
+        public string Identifier { get; }
+        public NavType Type { get; }
+
+        public Navaid(string identifier, NavType type)
+        {
+            Identifier = identifier;
+            Type = type;
+        }
+
+        public static void AddFix(string identifier, NavType type)
+        {
+            if (GetFix(identifier) == null)
+            {
+                allFixes.Add(new Navaid(identifier, type));
+            }
+        }
+
+        public static void AddFix(Navaid newNav)
+        {
+            if (GetFix(newNav.Identifier) == null)
+            {
+                allFixes.Add(newNav);
+            }
+        }
+
+        public static Navaid GetFix(string identifier)
+        {
+            for (int ndx = 0; ndx < allFixes.Count; ndx++)
+            {
+                if (allFixes[ndx].Identifier.Equals(identifier))
+                {
+                    return allFixes[ndx];
+                }
+            }
+            return null;
+        }
     }
 }

@@ -79,11 +79,16 @@ namespace NonRadar
             if (FolderPicker.ShowDialog() == DialogResult.OK)
             {
                 deserializer.FilePath = FolderPicker.SelectedPath;
-                if (!deserializer.findFiles())
+                if (!deserializer.FindFiles())
                 {
                     MessageBox.Show("Could not find files \"Aircraft.txt\" and/or \"Airways.txt\"", "Files not found");
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            deserializer.LoadAirways();
         }
     }
 }

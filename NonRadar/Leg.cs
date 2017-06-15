@@ -15,6 +15,7 @@ namespace NonRadar
         public int Bearing2     { get; set; }
         public int Distance     { get; set; }
         public int Mea          { get; set; }
+        private Leg next;
 
         public Leg(Navaid nav1, int bearing1, Navaid nav2, int bearing2, Navaid midpoint, int distance, int mea)
         {

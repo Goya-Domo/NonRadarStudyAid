@@ -18,7 +18,7 @@ namespace NonRadar
             
         }
 
-        public bool findFiles()
+        public bool FindFiles()
         {
             bool found = false;
             if (!string.IsNullOrEmpty(FilePath))
@@ -50,6 +50,39 @@ namespace NonRadar
             }
 
             return found;
+        }
+
+        public bool LoadAirways()
+        {
+            bool success = false;
+
+            if (awStream == null)
+                return false;
+
+            Reader = new StreamReader(awStream);
+
+            while(Reader.Peek() != -1)
+            {
+                //!TODO
+                Airway airway = new Airway(Reader.ReadLine().Split(':')[0]);
+                
+                string awRaw = Reader.ReadLine();
+                string[] awSplit = awRaw.Split('-');
+
+                for (int ndx = 0; ndx < awSplit.Length; ndx++)
+                {
+                    if (char.IsLetter(awSplit[ndx][0]) && char.IsLetter(awSplit[ndx][2]))
+                    {
+                        string type = awSplit[ndx].Split(new[] { '<', '>' })[1];
+                        Navaid nav1 = new Navaid(awSplit[ndx].Substring(0, 3), NavTools.ParseNavType(type));
+                        Navaid.AddFix(nav1);
+
+                        int bearing1 = int.Parse(awSplit[ndx].Substring(3, 3));
+                    }
+                }
+            }
+
+            return success;
         }
     }
 }

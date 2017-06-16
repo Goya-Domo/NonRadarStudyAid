@@ -22,6 +22,7 @@ namespace NonRadar
 
             acList = new List<AircraftType>();
             deserializer = new Deserializer();
+            Airspace.Initialize();
 
             Application.Idle += HandleApplicationIdle;
         }

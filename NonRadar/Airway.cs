@@ -19,10 +19,11 @@ namespace NonRadar
             Legs = new List<Leg>();
         }
 
-        public void AddLeg(Navaid nav1, int bearing1, Navaid nav2, int bearing2, Navaid midpoint, int distance, int mea)
-        {
-            Legs.Add(new NonRadar.Leg(nav1, bearing1, nav2, bearing2, midpoint, distance, mea));
-        }
+        //public void AddLeg(Navaid nav1, int bearing1, Navaid nav2, int bearing2, Navaid midpoint, int distance, int mea)
+        //{
+        //    Legs.Add(new NonRadar.Leg(nav1, bearing1, nav2, bearing2, midpoint, distance, mea));
+        //}
+
         public void AddLeg(Leg newLeg)
         {
             Legs.Add(newLeg);

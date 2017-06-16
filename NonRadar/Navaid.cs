@@ -12,11 +12,28 @@ namespace NonRadar
 
         public string Identifier { get; }
         public NavType Type { get; }
+        public bool Compulsory { get; }
 
         public Navaid(string identifier, NavType type)
         {
             Identifier = identifier;
             Type = type;
+            Compulsory = true;
+        }
+
+        public Navaid(string identifier, NavType type, bool compulsory)
+        {
+            Identifier = identifier;
+            Type = type;
+
+            if (Type == NavType.INTERSECTION)
+            {
+                Compulsory = compulsory;
+            }
+            else
+            {
+                Compulsory = true;
+            }
         }
 
         public static void AddFix(string identifier, NavType type)

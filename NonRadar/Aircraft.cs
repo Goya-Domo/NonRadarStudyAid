@@ -9,10 +9,11 @@ namespace NonRadar
     class Aircraft
     {
         public string Callsign { get; }
-        private AircraftType acType;
+        public AircraftType acType { get; }
 
         private int altitude;
         private int speed;
+        private float ATD;
 
         private int assignedAltitude;
         private int assignedSpeed;
@@ -53,19 +54,19 @@ namespace NonRadar
         {
             if (AssignedAltitude != altitude)
             {
-                updateAltitue();
+                UpdateAltitude();
             }
 
             if (AssignedSpeed != speed)
             {
-                updateSpeed();
+                UpdateSpeed();
             }
 
             updatePosition();
         }
 
 
-        public void assignAltitude(int alt)
+        public void AssignAltitude(int alt)
         {
             if (alt <= acType.SERVICECEILING)
             {
@@ -73,7 +74,7 @@ namespace NonRadar
             }
         }
 
-        public void assignSpeed(int speed)
+        public void AssignSpeed(int speed)
         {
             if (speed > acType.MINSPEED && speed < acType.MAXSPEED)
             {
@@ -81,19 +82,30 @@ namespace NonRadar
             }
         }
 
-        public void updateSpeed()
+        private void UpdateSpeed()
         {
             //TODO
         }
 
-        public void updateAltitue()
+        private void UpdateAltitude()
         {
-            //TODO implement w/ sim loop
+            if (altitude > AssignedAltitude * 100)
+            {
+                altitude -= (int)((float)acType.DESCENDRATE / 60);
+                if (altitude < AssignedAltitude * 100)
+                    altitude = AssignedAltitude * 100;
+            }
+            else
+            {
+                altitude += (int)((float)acType.CLIMBRATE / 60);
+                if (altitude > AssignedAltitude * 100)
+                    altitude = AssignedAltitude * 100;
+            }
         }
 
         public void updatePosition()
         {
-
+            ATD += (float)speed / 3600;
         }
     }
 }

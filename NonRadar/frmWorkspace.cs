@@ -13,16 +13,17 @@ namespace NonRadar
 {
     public partial class frmWorkspace : Form
     {
-        private List<AircraftType> acList;
+        private List<Aircraft> acList;
         private Deserializer deserializer;
 
         public frmWorkspace()
         {
             InitializeComponent();
 
-            acList = new List<AircraftType>();
+            acList = new List<Aircraft>();
             deserializer = new Deserializer();
             Airspace.Initialize();
+            AircraftType.Initialize();
 
             Application.Idle += HandleApplicationIdle;
         }
@@ -90,6 +91,7 @@ namespace NonRadar
         private void button1_Click(object sender, EventArgs e)
         {
             deserializer.LoadAirways();
+            deserializer.LoadAircraft();
         }
     }
 }

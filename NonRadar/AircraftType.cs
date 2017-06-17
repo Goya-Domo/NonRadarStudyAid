@@ -8,63 +8,49 @@ namespace NonRadar
 {
    public class AircraftType
     {
-        private int CLIMBRATE;
-        private int DESCENDRATE;
+        private static List<AircraftType> AllTypes;
 
-        private int MAXSPEED;
-        private int MINSPEED;
-        private int SERVICECEILING;
+        public string Identifier    { get; }
+        public string Model         { get; }
 
-        private int altitude;
-        private int speed;
+        public int CLIMBRATE        { get; }
+        public int DESCENDRATE      { get; }
 
-        public int AssignedAltitude { get; set; }
-        public int AssignedSpeed { get; set; }
+        public int MAXSPEED         { get; }
+        public int MINSPEED         { get; }
+        public int SERVICECEILING   { get; }
 
-        public void Update()
+        public AircraftType(string identifier, string model, int minspeed, int maxspeed, int climbrate, int ceiling)
         {
-            if (AssignedAltitude != altitude)
+            Identifier = identifier;
+            Model = model;
+
+            MINSPEED = minspeed;
+            MAXSPEED = maxspeed;
+
+            CLIMBRATE = climbrate;
+            DESCENDRATE = climbrate;
+
+            SERVICECEILING = ceiling;
+        }
+
+        public static bool AddType(string identifier, string model, int minspeed, int maxspeed, int climbrate, int ceiling)
+        {
+            foreach(AircraftType type in AllTypes)
             {
-                updateAltitue();
+                if (type.Identifier.Equals(identifier))
+                {
+                    return true;
+                }
             }
 
-            if (AssignedSpeed != speed)
-            {
-                updateSpeed();
-            }
-
-            updatePosition();
+            AllTypes.Add(new AircraftType(identifier, model, minspeed, maxspeed, climbrate, ceiling));
+            return true;
         }
 
-        public void assignAltitude(int alt)
+        public static void Initialize()
         {
-            if (alt <= SERVICECEILING)
-            {
-                AssignedAltitude = alt;
-            }
-        }
-
-        public void assignSpeed(int speed)
-        {
-            if (speed > MINSPEED && speed < MAXSPEED)
-            {
-                AssignedSpeed = speed;
-            }
-        }
-
-        public void updateSpeed()
-        {
-            //TODO
-        }
-
-        public void updateAltitue()
-        {
-            //TODO implement w/ sim loop
-        }
-
-        public void updatePosition()
-        {
-
-        }
+            AllTypes = new List<AircraftType>();
+        }        
     }
 }

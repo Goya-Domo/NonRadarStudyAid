@@ -65,10 +65,9 @@ namespace NonRadar
             //~TODO Regex would be very effective here
             while(Reader.Peek() != -1)
             {
-                //!TODO
                 Airway airway = new Airway(Reader.ReadLine().Split(':')[0]);
 
-                Leg leg1 = null, leg2 = null;
+                Leg leg1 = null;
                 
                 string awRaw = Reader.ReadLine();
                 string[] awSplit = awRaw.Split('-');
@@ -118,6 +117,56 @@ namespace NonRadar
                 }
 
                 Airspace.AddAirway(airway);
+            }
+
+            return success;
+        }
+
+        public bool LoadAircraft()
+        {
+            bool success = true;
+
+            if (awStream == null)
+                success = false;
+            else
+            {
+                Reader = new StreamReader(acStream);
+
+                while(Reader.Peek() != -1)
+                {
+                    string line = Reader.ReadLine();
+                    if (string.IsNullOrWhiteSpace(line) || string.IsNullOrEmpty(line))
+                        continue;
+
+                    string[] header = line.Split('"');
+                    string ident = header[0].Trim();
+                    string model = header[1].Trim();
+
+                    line = Reader.ReadLine();
+
+                    string[] performance = line.Split(',');
+
+                    int min, max, climb, ceiling;
+                    try
+                    {
+                        min = int.Parse(performance[0].Split('-')[0].Trim());
+                        max = int.Parse(performance[0].Split('-')[1].Trim());
+                        climb = int.Parse(performance[1].Trim());
+                        ceiling = int.Parse(performance[2].Trim());
+                    }
+                    catch(ArgumentNullException ex)
+                    {
+                        success = false;
+                        break;
+                    }
+                    catch(FormatException ex)
+                    {
+                        success = false;
+                        break;
+                    }
+
+                    AircraftType.AddType(ident, model, min, max, climb, ceiling);
+                }
             }
 
             return success;

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NonRadar
 {
-    class Airway
+    public class Airway
     {
-        private string Name { get; }
+        public string Name { get; }
         private List<Leg> Legs;
 
         private Airway() {  }
@@ -18,6 +18,9 @@ namespace NonRadar
             this.Name = name;
             Legs = new List<Leg>();
         }
+
+        public List<Leg> GetLegs()
+        { return Legs; }
 
         //public void AddLeg(Navaid nav1, int bearing1, Navaid nav2, int bearing2, Navaid midpoint, int distance, int mea)
         //{

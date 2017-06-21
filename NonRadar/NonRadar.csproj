@@ -51,6 +51,12 @@
     <Compile Include="Airspace.cs" />
     <Compile Include="Airway.cs" />
     <Compile Include="Deserializer.cs" />
+    <Compile Include="frmMapTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMapTest.Designer.cs">
+      <DependentUpon>frmMapTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmWorkspace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="NavType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmMapTest.resx">
+      <DependentUpon>frmMapTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmWorkspace.resx">
       <DependentUpon>frmWorkspace.cs</DependentUpon>
     </EmbeddedResource>

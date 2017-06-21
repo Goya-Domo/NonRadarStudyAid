@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NonRadar
 {
-    class Leg
+    public class Leg
     {
         public Leg Leg1 { get; set; }
         public Navaid Nav1 { get; }

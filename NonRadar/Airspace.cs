@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace NonRadar
 {
-    class Airspace
+    public class Airspace
     {
         private List<Airway> airways;
 
-        private static Airspace JanLo;
+        public static Airspace JanLo;
 
         public Airspace()
         {
             airways = new List<Airway>();
         }
+
+        public List<Airway> GetAirways()
+        { return airways; }
 
         public static void AddAirway(Airway airway)
         {

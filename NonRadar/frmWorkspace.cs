@@ -28,6 +28,20 @@ namespace NonRadar
             Application.Idle += HandleApplicationIdle;
         }
 
+        private void frmWorkspace_Load(object sender, EventArgs e)
+        {
+            deserializer.FilePath = @"D:\github\NonRadarStudyAid\Data";
+            if (!deserializer.FindFiles())
+            {
+                MessageBox.Show("Didn't find Data Files. \nSelect manually File > Select Folder", "Files not found");
+            }
+            else
+            {
+                deserializer.LoadAirways();
+                deserializer.LoadAircraft();
+            }
+        }
+
         void HandleApplicationIdle(object sender, EventArgs e)
         {
             while (IsApplicationIdle())
@@ -85,13 +99,18 @@ namespace NonRadar
                 {
                     MessageBox.Show("Could not find files \"Aircraft.txt\" and/or \"Airways.txt\"", "Files not found");
                 }
+                else
+                {
+                    deserializer.LoadAirways();
+                    deserializer.LoadAircraft();
+                }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            deserializer.LoadAirways();
-            deserializer.LoadAircraft();
+            new frmMapTest(Airspace.JanLo.GetAirways()).Show();
         }
+
     }
 }

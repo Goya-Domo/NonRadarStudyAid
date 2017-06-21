@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NonRadar
 {
-    class Aircraft
+    public class Aircraft
     {
         public string Callsign { get; }
         public AircraftType acType { get; }

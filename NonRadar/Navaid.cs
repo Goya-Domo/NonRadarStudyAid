@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NonRadar
 {
-    class Navaid
+    public class Navaid
     {
         static private List<Navaid> allFixes = new List<Navaid>();
 

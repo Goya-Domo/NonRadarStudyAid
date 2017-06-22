@@ -78,18 +78,29 @@ namespace NonRadar
 
                     Navaid nav1;
                     Navaid nav2;
-                    int? bearing1, bearing2;
+                    int bearing1, bearing2;
+                    bool bearing1Null, bearing2Null;
 
                     string navString1 = awSplit[ndx - 1];
                     if (navString1.Contains("<"))
                     {
                         string[] split = navString1.Split(new[] { '<', '>' });
                         nav1 = new Navaid(navString1.Substring(0, 3), NavTools.ParseNavType(split[1]));
-                        bearing1 = int.Parse(navString1.Substring(3, 3));                        
+                        bearing1 = 0;
+                        if (int.TryParse(navString1.Substring(3,3), out bearing1) == false)
+                        {
+                            bearing1Null = true;
+                            bearing1 = 0;
+                        }
+                        else
+                        {
+                            bearing1Null = false;
+                        }
                     }
                     else
                     {
-                        bearing1 = null;
+                        bearing1Null = true;
+                        bearing1 = 0;
                         nav1 = new Navaid(navString1.Substring(0, 5), NavType.INTERSECTION, (navString1.Length > 5) ? true : false);
                     }
 
@@ -98,15 +109,24 @@ namespace NonRadar
                     {
                         string[] split = navString2.Split(new[] { '<', '>' });
                         nav2 = new Navaid(navString2.Substring(0, 3), NavTools.ParseNavType(split[1]));
-                        bearing2 = int.Parse(navString2.Substring(3, 3));
+                        if (int.TryParse(navString2.Substring(3, 3), out bearing2) == false)
+                        {
+                            bearing2Null = true;
+                            bearing2 = 0;                            
+                        }
+                        else
+                        {
+                            bearing2Null = false;
+                        }
                     }
                     else
                     {
-                        bearing2 = null;
+                        bearing2Null = true;
+                        bearing2 = 0;
                         nav2 = new Navaid(navString2.Substring(0, 5), NavType.INTERSECTION, (navString2.Length > 5) ? true : false);
                     }
 
-                    Leg thisLeg = new Leg(leg1, nav1, bearing1, nav2, bearing2, distance, mea, null);
+                    Leg thisLeg = new Leg(leg1, nav1, (bearing1Null == true) ? null : (int?)bearing1, nav2, (bearing2Null == true) ? null : (int?)bearing2, distance, mea, null);
 
                     airway.AddLeg(thisLeg);
                     if (leg1 != null)
